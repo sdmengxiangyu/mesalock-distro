@@ -25,14 +25,15 @@ mkpkg() {
   builddir="$buildroot/bld/$pkgname"
   pkgdir="$buildroot/pkg/$pkgname"
   outdir="$buildroot/out"
+  logdir="$buildroot/log/$pkgname"
   
-  rm -rf "$srcdir" "$builddir" "$pkgdir"
-  mkdir -p "$srcdir" "$builddir" "$pkgdir" "$outdir"
+  rm -rf "$srcdir" "$builddir" "$pkgdir" "$logdir"
+  mkdir -p "$srcdir" "$builddir" "$pkgdir" "$outdir" "$logdir"
   
   echo "[+] $1: start"
   for f in prepare build package; do
     echo "[+] $1: $f"
-    cd "$buildroot" && "$f"
+    cd "$buildroot" && "$f" > "$logdir/$f.log"
   done
   
   echo "[+] $1: tar and zip"

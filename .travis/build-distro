@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+MESALOCK_DISTRO_DIR="$(pwd)"
+MESALOCK_LINUX_DIR="$(dirname $MESALOCK_DISTRO_DIR)"
+
+docker run -v "$MESALOCK_LINUX_DIR":/mesalock-linux -w /mesalock-linux/mesalock-distro -it mesalocklinux/build-mesalock-linux /bin/bash -c "./mkpkg"
+docker run -v "$MESALOCK_LINUX_DIR":/mesalock-linux -w /mesalock-linux/mesalock-distro -it mesalocklinux/build-mesalock-linux /bin/bash -c "./mesalockiso"
+docker run -v "$MESALOCK_LINUX_DIR":/mesalock-linux -w /mesalock-linux/mesalock-distro -it mesalocklinux/build-mesalock-linux /bin/bash -c "./mesalockrootfs"
